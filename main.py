@@ -68,15 +68,26 @@ if __name__ == '__main__':
     # print(f"Number of five letter words: {len(five_letter_words)}")
     print(f"Number of filtered five letter words: {len(filtered_five_letter_words)}")
     print(f"A filtered five letter word: {filtered_five_letter_words[300]}")
+
+    # Strategy:
+    # Find words containing all the most frequent letters
+    # Use one of those words to find which letters appear in the word
+    # Remove all words containing letters that we now know don't appear
+    # Find all words with a letter in the correct spot
+    # TODO Penalize words with duplicated letters (deice -> two of letter e)
     letters = [letter for letter, frequency in letter_counts.most_common(WORD_LENGTH)]
     best_words = find_words_containing_all_these_letters(filtered_five_letter_words, letters)
     print(best_words)
+    #TODO hardcoded values from one puzzle
     current_words = remove_words_containing(filtered_five_letter_words, ['a', 'r', 'o', 's'])
     print(current_words)
+    #TODO hardcoded values from one puzzle
     current_words = words_with_letters_at_specific_places(current_words, {'e': 4})
     print(f"The number of possible answers are: {len(current_words)}")
     print(f"The best current guesses are: {current_words}")
+    #TODO hardcoded values from one puzzle
     current_words = remove_words_containing(current_words, ['j', 'u', 'y'])
+    #TODO hardcoded values from one puzzle
     current_words = words_with_letters_at_specific_places(current_words, {'e': 4, 'c': 3})
     print(f"The number of possible answers are: {len(current_words)}")
     print(f"The best current guesses are: {current_words}")
@@ -84,8 +95,12 @@ if __name__ == '__main__':
     current_letter_counts = count_letters(current_words)
     print(current_letter_counts)
     # letters = [letter for letter, frequency in current_letter_counts.most_common(WORD_LENGTH + 1)]
+
+    #TODO hardcoded values from one puzzle
     words_to_search_through = remove_words_containing(filtered_five_letter_words, ['a', 'r', 'o', 's', 'e'])
     print(f"Possible words to use: {len(words_to_search_through)}")
+
+    #TODO hardcoded values from one puzzle
     current_letter_counts.pop('e')  # Fjern den ene bokstaven vi vet fantes
     trash = []
     for first_letter, frequency in current_letter_counts.most_common(len(current_letter_counts) - 1):
